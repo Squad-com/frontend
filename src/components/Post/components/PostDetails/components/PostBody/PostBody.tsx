@@ -1,5 +1,6 @@
 import { Grid, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { FC } from 'react';
 
 const useStyles = makeStyles({
   root: {
@@ -14,16 +15,17 @@ const useStyles = makeStyles({
   },
 });
 
-const PostBody = () => {
+export type PostBodyProps = {
+  description: string;
+  images: string[];
+};
+
+const PostBody: FC<PostBodyProps> = ({ description, images }) => {
   const classes = useStyles();
 
   return (
     <Grid className={classes.root} container direction='column'>
-      <Typography variant='body1'>
-        "Come on. Come on. I want you to do it. I want you to do it. Come on,
-        hit me" Why didn't Batman hit Joker in that scene? (Image courtesy of
-        Warner Bros. Pictures)
-      </Typography>
+      <Typography variant='body1'>{description}</Typography>
       <Grid
         className={classes.imageWrapper}
         container

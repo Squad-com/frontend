@@ -12,3 +12,9 @@ export const createPost = ({ description }: CreatePostOptions) => {
     .then(console.log)
     .catch((err) => console.log(err.message));
 };
+
+export const likePost = (postId: string) =>
+  axiosInstance
+    .post(`/posts/${postId}/like`)
+    .then((res) => res.data)
+    .catch(null);

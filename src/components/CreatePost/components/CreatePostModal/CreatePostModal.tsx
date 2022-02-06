@@ -1,6 +1,7 @@
 import { Avatar, Dialog, Divider, Grid, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../../redux/hooks';
+import { modalActions } from '../../../../redux/slices/modalSlice';
 import theme from '../../../../theme';
 import CreatePostForm from './components/CreatePostForm';
 
@@ -13,13 +14,14 @@ const useStyles = makeStyles({
   },
 });
 const CreatePostModal = () => {
-  const [open, setOpen] = useState(false);
   const classes = useStyles();
+  const dispatch = useAppDispatch();
+  const isOpen = useAppSelector((state) => state.modal.createPostModal);
 
   return (
     <Dialog
-      open={open}
-      onClose={() => setOpen(false)}
+      open={isOpen}
+      onClose={() => dispatch(modalActions.toggleCreatePostModal())}
       aria-labelledby='modal-modal-title'
       aria-describedby='modal-modal-description'
     >

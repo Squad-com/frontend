@@ -1,9 +1,10 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import { logger } from 'redux-logger';
+import modalSlice from './slices/modalSlice';
 import postSlice from './slices/postSlice';
 
 const store = configureStore({
-  reducer: { post: postSlice.reducer },
+  reducer: { post: postSlice.reducer, modal: modalSlice.reducer },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 

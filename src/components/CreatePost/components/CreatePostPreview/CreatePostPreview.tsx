@@ -1,6 +1,8 @@
 import { Avatar, Grid, Paper, TextField } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
+import { useAppDispatch } from '../../../../redux/hooks';
+import { modalActions } from '../../../../redux/slices/modalSlice';
 import theme from '../../../../theme';
 
 const useStyles = makeStyles({
@@ -16,6 +18,7 @@ const useStyles = makeStyles({
 
 const CreatePostPreview = () => {
   const classes = useStyles();
+  const dispatch = useAppDispatch();
 
   return (
     <Paper className={classes.root}>
@@ -32,6 +35,7 @@ const CreatePostPreview = () => {
           <TextField
             className={classes.input}
             placeholder='Create Post'
+            onClick={() => dispatch(modalActions.toggleCreatePostModal())}
             fullWidth
             id='fullWidth'
           />

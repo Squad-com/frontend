@@ -17,7 +17,7 @@ const Home = () => {
     <Grid container direction='column'>
       <CreatePost />
       {posts.map((post, index) => (
-        <Post key={`post-${index}`} />
+        <Post key={`post-${post.id}`} post={post} />
       ))}
     </Grid>
   );

@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchAllPostsThunk } from '../thunks/postThunks';
+import { PostType } from '../../types/post';
+import { fetchAllPostsThunk, likePostThunk } from '../thunks/postThunks';
 
 export interface PostState {
-  posts: Array<any>;
+  posts: Array<PostType>;
   loading: boolean;
 }
 
@@ -12,7 +13,7 @@ const initialState: PostState = {
 };
 
 const postSlice = createSlice({
-  name: 'counter',
+  name: 'post',
   initialState,
   reducers: {
     toggleLoading(state) {
@@ -27,6 +28,14 @@ const postSlice = createSlice({
       .addCase(fetchAllPostsThunk.fulfilled, (state, action) => {
         state.loading = false;
         state.posts = action.payload;
+      })
+      .addCase(likePostThunk.fulfilled, (state, action) => {
+        const currentPostIndex = state.posts.findIndex(
+          ({ id }) => action.payload.id === id
+        );
+        if (currentPostIndex !== -1) {
+          state.posts[currentPostIndex] = action.payload;
+        }
       });
   },
 });

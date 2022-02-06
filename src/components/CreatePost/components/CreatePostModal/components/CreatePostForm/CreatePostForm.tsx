@@ -37,6 +37,7 @@ const CreatePostForm = () => {
         placeholder='What do you want to talk about?'
         minRows={3}
         multiline
+        autoFocus
       />
       <Button
         className={classes.button}

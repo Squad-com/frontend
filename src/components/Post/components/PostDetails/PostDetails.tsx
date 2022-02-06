@@ -1,7 +1,8 @@
 import { Grid } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import React from 'react';
+import { FC } from 'react';
 import theme from '../../../../theme';
+import { PostAuthor } from '../../../../types/post';
 import PostBody from './components/PostBody';
 import PostFooter from './components/PostFooter';
 import PostHeader from './components/PostHeader';
@@ -11,13 +12,20 @@ const useStyles = makeStyles({
     padding: theme.spacing(3),
   },
 });
-const PostDetails = () => {
+
+export type PostDetailsProps = {
+  author: PostAuthor;
+  description: string;
+  images: string[];
+};
+
+const PostDetails: FC<PostDetailsProps> = ({ author, description, images }) => {
   const classes = useStyles();
 
   return (
     <Grid className={classes.root} item xs>
-      <PostHeader />
-      <PostBody />
+      <PostHeader author={author} />
+      <PostBody description={description} images={images} />
       <PostFooter />
     </Grid>
   );

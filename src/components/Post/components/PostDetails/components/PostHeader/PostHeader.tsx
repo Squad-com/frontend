@@ -1,6 +1,7 @@
 import { Avatar, Button, Grid, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { FC } from 'react';
+import { PostAuthor } from '../../../../../../types/post';
 
 const useStyles = makeStyles({
   root: {},
@@ -12,15 +13,11 @@ const useStyles = makeStyles({
   },
 });
 
-export type PostHeaderProps = {
-  fullName?: string;
-  image?: string;
-};
-const PostHeader: FC<PostHeaderProps> = ({
-  fullName = 'Suleyman Barış Eser',
-  image = 'https://media-exp1.licdn.com/dms/image/C4D03AQGFx1xLk_3SwA/profile-displayphoto-shrink_800_800/0/1612644878181?e=1648080000&v=beta&t=nZWIfXpoNYUT80Si_iuWZHFyC5KFOZDzB1qPgJNEkRI',
-}) => {
+export type PostHeaderProps = { author: PostAuthor };
+
+const PostHeader: FC<PostHeaderProps> = ({ author }) => {
   const classes = useStyles();
+  const fullName = [author.firstName, author.lastName].join(' ');
 
   return (
     <Grid
@@ -29,20 +26,13 @@ const PostHeader: FC<PostHeaderProps> = ({
       direction='row'
       alignItems='center'
     >
-      <Avatar>
-        <img src={image} alt={fullName} />
-      </Avatar>
+      <Avatar src={author.image} alt={fullName} />
       <Typography className={classes.fullName} variant='subtitle1'>
         {fullName}
       </Typography>
-      <Typography
-        className={classes.postedBy}
-        variant='body2'
-        color='textSecondary'
-      >
-        • Posted by {fullName} 6 hour ago
-      </Typography>
-      <Button variant='contained'>Follow</Button>
+      <Grid item xs container direction='row' justifyContent='flex-end'>
+        <Button variant='contained'>Follow</Button>
+      </Grid>
     </Grid>
   );
 };

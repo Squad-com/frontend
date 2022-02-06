@@ -12,4 +12,12 @@ if (authToken) {
   ] = `Bearer ${authToken}`;
 }
 
+axiosInstance.interceptors.response.use(
+  (res) => res,
+  (err) => {
+    console.error(err);
+    throw err;
+  }
+);
+
 export default axiosInstance;
