@@ -1,5 +1,4 @@
 import { Grid } from '@mui/material';
-import React from 'react';
 import CreatePostModal from './components/CreatePostModal';
 import CreatePostPreview from './components/CreatePostPreview';
 

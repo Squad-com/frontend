@@ -1,22 +1,12 @@
-import { CssBaseline, Divider, Grid, Paper, Typography } from '@mui/material';
-import Container from '@mui/material/Container';
+import { Grid, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import LoginForm from '../../components/LoginForm';
-import theme from '../../theme';
+import LoginForm from 'components/LoginForm';
+import AuthWrapper from 'containers/AuthWrapper';
+import theme from 'theme';
 
 const useStyles = makeStyles({
-  root: {
-    minHeight: '100vh',
-    display: 'flex',
-  },
-  container: {
-    flex: 1,
-  },
-  paper: {
-    padding: theme.spacing(5, 3),
-  },
-  divider: {
-    margin: theme.spacing(3, 0),
+  title: {
+    marginBottom: theme.spacing(3),
   },
 });
 
@@ -24,24 +14,18 @@ const Login = () => {
   const classes = useStyles();
 
   return (
-    <Container className={classes.root} maxWidth='xs'>
-      <CssBaseline />
-      <Grid
-        className={classes.container}
-        container
-        direction='row'
-        alignItems='center'
-      >
-        <Paper className={classes.paper} elevation={2}>
-          <Typography variant='h1'>Login</Typography>
-          <Grid container direction='column'>
-            Social Login
-          </Grid>
-          <Divider className={classes.divider}>OR</Divider>
-          <LoginForm />
-        </Paper>
+    <AuthWrapper>
+      <Grid container direction='column'>
+        <Typography className={classes.title} variant='h1'>
+          Log in
+        </Typography>
+        <Typography variant='body1' color='GrayText'>
+          Welcome to Squad! Please put your login credentials below to start
+          using app.
+        </Typography>
+        <LoginForm />
       </Grid>
-    </Container>
+    </AuthWrapper>
   );
 };
 

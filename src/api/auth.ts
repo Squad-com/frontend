@@ -1,15 +1,14 @@
-import axiosInstance from '../axios';
+import axiosInstance from '../axiosInstance';
 
+export type LoginResponse = {
+  token: string;
+};
 export type LoginOptions = {
   username: string;
   password: string;
 };
-export const login = ({ username, password }: LoginOptions) => {
-  axiosInstance
-    .post('/auth/login', { username, password })
-    .then((res) => {
-      const { token } = res.data;
-      localStorage.setItem('auth-token', token);
-    })
-    .catch(console.log);
-};
+export const login = ({
+  username,
+  password,
+}: LoginOptions): Promise<LoginResponse> =>
+  axiosInstance.post('/auth/login', { username, password });

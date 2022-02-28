@@ -6,8 +6,6 @@ import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import { makeStyles } from '@mui/styles';
 import theme from '../../../../theme';
 import { FC } from 'react';
-import { useAppDispatch } from '../../../../redux/hooks';
-import { likePostThunk } from '../../../../redux/thunks/postThunks';
 
 const useStyles = makeStyles({
   root: {
@@ -30,38 +28,34 @@ const PostLikePanel: FC<PostLikePanelProps> = ({
   voteStatus,
 }) => {
   const classes = useStyles();
-  const dispatch = useAppDispatch();
+
+  const handleLike = console.log;
 
   return (
-    <Paper elevation={2}>
-      <Grid className={classes.root} item>
-        <Grid container direction='column' alignItems='center'>
-          <IconButton
-            onClick={() => dispatch(likePostThunk(postId))}
-            // disabled={voteStatus === 'UP'}
-          >
-            {voteStatus === 'UP' ? (
-              <ThumbUpAltIcon color='primary' />
-            ) : (
-              <ThumbUpAltOutlinedIcon />
-            )}
-          </IconButton>
-          <Typography className={classes.count} variant='subtitle1'>
-            {score}
-          </Typography>
-          <IconButton
-            onClick={() => console.log('DOWN')}
-            disabled={voteStatus === 'DOWN'}
-          >
-            {voteStatus === 'DOWN' ? (
-              <ThumbDownAltIcon color='primary' />
-            ) : (
-              <ThumbDownAltOutlinedIcon />
-            )}
-          </IconButton>
-        </Grid>
+    <Grid className={classes.root} item>
+      <Grid container direction='column' alignItems='center'>
+        <IconButton onClick={handleLike}>
+          {voteStatus === 'UP' ? (
+            <ThumbUpAltIcon color='primary' />
+          ) : (
+            <ThumbUpAltOutlinedIcon />
+          )}
+        </IconButton>
+        <Typography className={classes.count} variant='subtitle1'>
+          {score}
+        </Typography>
+        <IconButton
+          onClick={() => console.log('DOWN')}
+          disabled={voteStatus === 'DOWN'}
+        >
+          {voteStatus === 'DOWN' ? (
+            <ThumbDownAltIcon color='primary' />
+          ) : (
+            <ThumbDownAltOutlinedIcon />
+          )}
+        </IconButton>
       </Grid>
-    </Paper>
+    </Grid>
   );
 };
 

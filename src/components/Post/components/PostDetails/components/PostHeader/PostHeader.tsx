@@ -1,7 +1,7 @@
 import { Avatar, Button, Grid, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { NetworkUserType } from 'api/post';
 import { FC } from 'react';
-import { PostAuthor } from '../../../../../../types/post';
 
 const useStyles = makeStyles({
   root: {},
@@ -13,7 +13,7 @@ const useStyles = makeStyles({
   },
 });
 
-export type PostHeaderProps = { author: PostAuthor };
+export type PostHeaderProps = { author: NetworkUserType };
 
 const PostHeader: FC<PostHeaderProps> = ({ author }) => {
   const classes = useStyles();

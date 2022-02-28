@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { setupInterceptorsTo } from './interceptors';
 
-const axiosInstance = axios.create({
+let axiosInstance = axios.create({
   baseURL: 'http://localhost:8000',
   timeout: 5000,
 });
@@ -12,12 +13,6 @@ if (authToken) {
   ] = `Bearer ${authToken}`;
 }
 
-axiosInstance.interceptors.response.use(
-  (res) => res,
-  (err) => {
-    console.error(err);
-    throw err;
-  }
-);
+axiosInstance = setupInterceptorsTo(axiosInstance);
 
 export default axiosInstance;

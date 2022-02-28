@@ -26,18 +26,16 @@ const PostBody: FC<PostBodyProps> = ({ description, images }) => {
   return (
     <Grid className={classes.root} container direction='column'>
       <Typography variant='body1'>{description}</Typography>
-      <Grid
-        className={classes.imageWrapper}
-        container
-        direction='row'
-        justifyContent='center'
-      >
-        <img
-          className={classes.image}
-          src='https://i.redd.it/d0xy56wcsmc81.jpg'
-          alt='Test'
-        />
-      </Grid>
+      {images[0] && (
+        <Grid
+          className={classes.imageWrapper}
+          container
+          direction='row'
+          justifyContent='center'
+        >
+          <img className={classes.image} src={images[0]} alt='Test' />
+        </Grid>
+      )}
     </Grid>
   );
 };

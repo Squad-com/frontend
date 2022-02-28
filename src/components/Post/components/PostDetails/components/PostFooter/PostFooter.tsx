@@ -1,14 +1,16 @@
-import CommentBankOutlinedIcon from '@mui/icons-material/CommentBankOutlined';
+import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
 import IosShareOutlinedIcon from '@mui/icons-material/IosShareOutlined';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import { Grid, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import React from 'react';
+import { Button, Grid, Typography } from '@mui/material';
+import { FC } from 'react';
+import { useSetRecoilState } from 'recoil';
+import { showCommentState } from 'recoil/atoms/post';
 
-const useStyles = makeStyles({
+const styles = {
   root: {},
   item: {
     padding: '0 10px',
+    borderRadius: 2,
   },
   text: {
     marginLeft: 5,
@@ -17,49 +19,41 @@ const useStyles = makeStyles({
     color: '#9b9b9b',
     fontSize: 30,
   },
-});
+};
 
-const PostFooter = () => {
-  const classes = useStyles();
+export type PostFooterProps = {
+  postId: string;
+};
+
+const PostFooter: FC<PostFooterProps> = ({ postId }) => {
+  const setShowState = useSetRecoilState(showCommentState(postId));
 
   return (
-    <Grid className={classes.root} container direction='row'>
-      <Grid className={classes.item} item>
-        <Grid container direction='row' alignItems='center'>
-          <CommentBankOutlinedIcon className={classes.icon} />
-          <Typography
-            className={classes.text}
-            variant='subtitle1'
-            color='textSecondary'
-          >
-            13 comments
-          </Typography>
-        </Grid>
-      </Grid>
-      <Grid className={classes.item} item>
-        <Grid container direction='row' alignItems='center'>
-          <IosShareOutlinedIcon className={classes.icon} />
-          <Typography
-            className={classes.text}
-            variant='subtitle1'
-            color='textSecondary'
-          >
-            Share
-          </Typography>
-        </Grid>
-      </Grid>
-      <Grid className={classes.item} item>
-        <Grid container direction='row' alignItems='center'>
-          <BookmarkBorderOutlinedIcon className={classes.icon} />
-          <Typography
-            className={classes.text}
-            variant='subtitle1'
-            color='textSecondary'
-          >
-            Save
-          </Typography>
-        </Grid>
-      </Grid>
+    <Grid sx={styles.root} container direction='row'>
+      <Button
+        sx={styles.item}
+        onClick={() => setShowState((prev) => !prev)}
+        variant='text'
+        startIcon={<ForumOutlinedIcon sx={styles.icon} />}
+      >
+        13 comments
+      </Button>
+      <Button
+        sx={styles.item}
+        onClick={() => setShowState((prev) => !prev)}
+        variant='text'
+        startIcon={<IosShareOutlinedIcon sx={styles.icon} />}
+      >
+        Share
+      </Button>
+      <Button
+        sx={styles.item}
+        onClick={() => setShowState((prev) => !prev)}
+        variant='text'
+        startIcon={<BookmarkBorderOutlinedIcon sx={styles.icon} />}
+      >
+        Save
+      </Button>
     </Grid>
   );
 };

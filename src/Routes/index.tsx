@@ -1,12 +1,18 @@
+import useAuth from 'hooks/useAuth';
+import { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import PrivateRoutes from './PrivateRoutes';
 import PublicRoutes from './PublicRoutes';
 
 const Routes = () => {
+  const { isLoggedIn, onMount } = useAuth();
+
+  useEffect(onMount);
+
   return (
     <BrowserRouter>
-      <PrivateRoutes />
-      <PublicRoutes />
+      {isLoggedIn && <PrivateRoutes />}
+      {!isLoggedIn && <PublicRoutes />}
     </BrowserRouter>
   );
 };

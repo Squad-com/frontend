@@ -1,25 +1,19 @@
-import { Grid } from '@mui/material';
-import { useEffect } from 'react';
+import { Container } from '@mui/material';
+import { useRecoilValue } from 'recoil';
 import CreatePost from '../../components/CreatePost';
 import Post from '../../components/Post';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { fetchAllPostsThunk } from '../../redux/thunks/postThunks';
+import { networkPostsState } from '../../recoil/selectors/post';
 
 const Home = () => {
-  const dispatch = useAppDispatch();
-  const posts = useAppSelector((state) => state.post.posts);
-
-  useEffect(() => {
-    dispatch(fetchAllPostsThunk());
-  }, [dispatch]);
+  const networkPosts = useRecoilValue(networkPostsState);
 
   return (
-    <Grid container direction='column'>
+    <Container>
       <CreatePost />
-      {posts.map((post, index) => (
+      {networkPosts.map((post, index) => (
         <Post key={`post-${post.id}`} post={post} />
       ))}
-    </Grid>
+    </Container>
   );
 };
 

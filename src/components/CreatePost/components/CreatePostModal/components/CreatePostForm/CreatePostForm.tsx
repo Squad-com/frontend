@@ -1,56 +1,103 @@
-import { Button, Grid, TextField } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { Grid, TextField, Typography } from '@mui/material';
+import { createPost } from 'api/post';
+import LoadingButton from 'components/LoadingButton';
+import { useSnackbar } from 'notistack';
 import { useState } from 'react';
-import { createPost } from '../../../../../../api/post';
-import theme from '../../../../../../theme';
+import { useForm } from 'react-hook-form';
+import { useSetRecoilState } from 'recoil';
+import { createPostModalState } from 'recoil/atoms';
+import getErrorMessage from 'utils/getErrorMessage';
 
-const useStyles = makeStyles({
+const styles = {
   root: {
-    padding: theme.spacing(2),
-    margin: theme.spacing(4, 0),
+    padding: 2,
   },
   textField: {
     padding: 0,
-    '& $fieldset': {
+    '& fieldset': {
       border: 'none',
+    },
+    '& .MuiOutlinedInput-root': {
+      padding: 3,
+      paddingLeft: 0,
+      paddingRight: 0,
     },
   },
   textFieldRoot: {
     padding: 0,
   },
   button: {
-    marginTop: theme.spacing(4),
+    marginTop: 4,
   },
-});
+};
+
+type FormElements = {
+  post: string;
+};
+
 const CreatePostForm = () => {
-  const classes = useStyles();
-  const [description, setDescription] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const setPostModal = useSetRecoilState(createPostModalState);
+  const { enqueueSnackbar } = useSnackbar();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormElements>();
+
+  const onSubmit = ({ post }: FormElements) => {
+    setIsLoading(true);
+    createPost({ description: post })
+      .then((data) => {
+        setPostModal(false);
+        enqueueSnackbar('New post is created!', { variant: 'success' });
+      })
+      .catch((err) => {
+        const message = getErrorMessage(err);
+        enqueueSnackbar(message, { variant: 'error' });
+      })
+      .finally(() => setIsLoading(false));
+  };
 
   return (
-    <Grid className={classes.root} container direction='column'>
-      <TextField
-        className={classes.textField}
-        InputProps={{ classes: { root: classes.textFieldRoot } }}
-        value={description}
-        onChange={({ target: { value } }) => setDescription(value)}
-        name='post'
-        placeholder='What do you want to talk about?'
-        minRows={3}
-        multiline
-        autoFocus
-      />
-      <Button
-        className={classes.button}
-        onClick={() => {
-          createPost({ description });
-        }}
+    <Grid
+      sx={styles.root}
+      component='form'
+      onSubmit={handleSubmit(onSubmit)}
+      container
+      direction='column'
+    >
+      <Grid container>
+        <TextField
+          sx={styles.textField}
+          {...register('post', {
+            required: true,
+          })}
+          placeholder='What do you want to talk about?'
+          minRows={3}
+          maxRows={6}
+          multiline
+          autoFocus
+          fullWidth
+        />
+        {errors.post && (
+          <Typography variant='body2' color='red'>
+            Please fill this part!
+          </Typography>
+        )}
+      </Grid>
+      <LoadingButton
+        sx={styles.button}
+        isLoading={isLoading}
+        type='submit'
         variant='contained'
         color='primary'
-        disabled={!description}
+        disabled={!watch('post')}
         fullWidth
       >
         Create
-      </Button>
+      </LoadingButton>
     </Grid>
   );
 };

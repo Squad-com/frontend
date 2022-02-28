@@ -1,10 +1,10 @@
 import { Grid } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { NetworkUserType } from 'api/post';
 import { FC } from 'react';
-import theme from '../../../../theme';
-import { PostAuthor } from '../../../../types/post';
+import theme from 'theme';
 import PostBody from './components/PostBody';
-import PostFooter from './components/PostFooter';
+import PostFooter, { PostFooterProps } from './components/PostFooter';
 import PostHeader from './components/PostHeader';
 
 const useStyles = makeStyles({
@@ -14,19 +14,24 @@ const useStyles = makeStyles({
 });
 
 export type PostDetailsProps = {
-  author: PostAuthor;
+  author: NetworkUserType;
   description: string;
   images: string[];
-};
+} & PostFooterProps;
 
-const PostDetails: FC<PostDetailsProps> = ({ author, description, images }) => {
+const PostDetails: FC<PostDetailsProps> = ({
+  postId,
+  author,
+  description,
+  images,
+}) => {
   const classes = useStyles();
 
   return (
     <Grid className={classes.root} item xs>
       <PostHeader author={author} />
       <PostBody description={description} images={images} />
-      <PostFooter />
+      <PostFooter postId={postId} />
     </Grid>
   );
 };

@@ -11,42 +11,61 @@ const responsiveFontSize = (lg: string, md: string): CSSProperties => ({
 
 const theme = createTheme({
   palette: {
-    mode: 'dark',
+    primary: {
+      main: '#551156',
+    },
   },
   typography: {
     h1: {
-      ...responsiveFontSize('26px', '21px'),
+      fontWeight: 700,
+      ...responsiveFontSize('24px', '21px'),
     },
-    h2: { ...responsiveFontSize('24px', '18px') },
-    h3: { ...responsiveFontSize('22px', '16px') },
+    h2: { fontWeight: 700, ...responsiveFontSize('22px', '18px') },
+    h3: { fontWeight: 700, ...responsiveFontSize('20px', '16px') },
     h4: {
-      ...responsiveFontSize('20px', '14px'),
+      fontWeight: 700,
+      ...responsiveFontSize('18px', '14px'),
     },
     h5: {
-      ...responsiveFontSize('19px', '13px'),
+      fontWeight: 700,
+      ...responsiveFontSize('16px', '13px'),
     },
-    h6: { ...responsiveFontSize('18px', '12px') },
+    h6: { fontWeight: 700, ...responsiveFontSize('14px', '12px') },
     subtitle1: {
-      ...responsiveFontSize('22px', '16px'),
+      fontWeight: 500,
+      ...responsiveFontSize('18px', '14px'),
     },
     subtitle2: {
-      ...responsiveFontSize('20px', '14px'),
+      fontWeight: 500,
+      ...responsiveFontSize('16px', '13px'),
     },
     body1: {
-      ...responsiveFontSize('18px', '13px'),
+      ...responsiveFontSize('14px', '12px'),
     },
     body2: {
-      ...responsiveFontSize('16px', '12px'),
+      ...responsiveFontSize('12px', '10px'),
     },
     button: {
       fontSize: '16px',
     },
     caption: {
+      fontWeight: 600,
       ...responsiveFontSize('16px', '13px'),
     },
+    fontFamily: ["'Nunito Sans'", 'serif'].join(','),
   },
   spacing: 4,
   components: {
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          boxShadow: 'none',
+          borderWidth: 1,
+          borderColor: 'rgb(239,239,239)',
+          borderStyle: 'solid',
+        },
+      },
+    },
     MuiDialog: {
       styleOverrides: {
         paper: {
@@ -56,10 +75,19 @@ const theme = createTheme({
         },
       },
     },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '& input': {
+            padding: '10px',
+          },
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
-          height: 35,
+          height: 40,
           borderRadius: 999,
           boxShadow: 'none',
           textTransform: 'none',
