@@ -1,17 +1,15 @@
 import { Grid } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import { NetworkUserType } from 'api/post';
 import { FC } from 'react';
-import theme from 'theme';
+import { NetworkUserType } from 'src/api/post';
 import PostBody from './components/PostBody';
 import PostFooter, { PostFooterProps } from './components/PostFooter';
 import PostHeader from './components/PostHeader';
 
-const useStyles = makeStyles({
+const styles = {
   root: {
-    padding: theme.spacing(3),
+    padding: 3,
   },
-});
+};
 
 export type PostDetailsProps = {
   author: NetworkUserType;
@@ -24,14 +22,13 @@ const PostDetails: FC<PostDetailsProps> = ({
   author,
   description,
   images,
+  comments,
 }) => {
-  const classes = useStyles();
-
   return (
-    <Grid className={classes.root} item xs>
+    <Grid sx={styles.root} item xs>
       <PostHeader author={author} />
       <PostBody description={description} images={images} />
-      <PostFooter postId={postId} />
+      <PostFooter comments={comments} postId={postId} />
     </Grid>
   );
 };

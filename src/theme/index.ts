@@ -14,6 +14,10 @@ const theme = createTheme({
     primary: {
       main: '#551156',
     },
+    background: {
+      default: '#F3F3F3',
+      paper: '#EDEDED',
+    },
   },
   typography: {
     h1: {
@@ -63,6 +67,7 @@ const theme = createTheme({
           borderWidth: 1,
           borderColor: 'rgb(239,239,239)',
           borderStyle: 'solid',
+          borderRadius: 8,
         },
       },
     },

@@ -1,10 +1,10 @@
+import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
 import IosShareOutlinedIcon from '@mui/icons-material/IosShareOutlined';
-import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
-import { Button, Grid, Typography } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import { FC } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { showCommentState } from 'recoil/atoms/post';
+import { showCommentState } from 'src/recoil/comment';
 
 const styles = {
   root: {},
@@ -23,9 +23,10 @@ const styles = {
 
 export type PostFooterProps = {
   postId: string;
+  comments: any[];
 };
 
-const PostFooter: FC<PostFooterProps> = ({ postId }) => {
+const PostFooter: FC<PostFooterProps> = ({ postId, comments }) => {
   const setShowState = useSetRecoilState(showCommentState(postId));
 
   return (
@@ -36,7 +37,7 @@ const PostFooter: FC<PostFooterProps> = ({ postId }) => {
         variant='text'
         startIcon={<ForumOutlinedIcon sx={styles.icon} />}
       >
-        13 comments
+        {comments} comments
       </Button>
       <Button
         sx={styles.item}

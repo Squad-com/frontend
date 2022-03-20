@@ -1,6 +1,6 @@
-import useAuth from 'hooks/useAuth';
 import { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import useAuth from 'src/hooks/useAuth';
 import PrivateRoutes from './PrivateRoutes';
 import PublicRoutes from './PublicRoutes';
 

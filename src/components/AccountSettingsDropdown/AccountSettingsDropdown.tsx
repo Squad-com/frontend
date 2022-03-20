@@ -6,8 +6,8 @@ import {
   MenuItem,
   Typography,
 } from '@mui/material';
-import useAuth from 'hooks/useAuth';
-import { useState, MouseEvent } from 'react';
+import { MouseEvent, useState } from 'react';
+import useAuth from 'src/hooks/useAuth';
 
 const styles = {
   button: {

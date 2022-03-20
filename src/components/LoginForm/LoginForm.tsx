@@ -1,26 +1,26 @@
 import { Grid, TextField, Typography } from '@mui/material';
-import { useState } from 'react';
-import useAuth from 'hooks/useAuth';
-import { login } from 'api/auth';
-import theme from 'theme';
-import { useSnackbar } from 'notistack';
 import { AxiosError } from 'axios';
+import { useSnackbar } from 'notistack';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import getErrorMessage from 'utils/getErrorMessage';
-import LoadingButton from 'components/LoadingButton';
+import { login } from 'src/api/auth';
+import useAuth from 'src/hooks/useAuth';
+import getErrorMessage from 'src/utils/getErrorMessage';
+import LoadingButton from '../LoadingButton';
 
 const styles = {
   underline: {
     borderWidth: 2,
     borderStyle: 'solid',
-    borderColor: theme.palette.divider,
+    borderColor: 'divider',
     borderRadius: 8,
     '&::before, &::after': {
       borderBottom: 'none !important',
     },
   },
   formItem: {
-    margin: [4, 0],
+    marginTop: 4,
+    marginBottom: 4,
   },
   button: {
     height: 50,

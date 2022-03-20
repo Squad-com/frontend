@@ -1,56 +1,73 @@
-import { Button, Grid, Paper, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import { CommentType } from 'api/comment';
+import { Button, Grid, Link, Typography } from '@mui/material';
 import { FC, useState } from 'react';
-import theme from '../../theme';
+import { CommentType } from 'src/api/comment';
+import CommentForm from '../CommentForm';
 import CommentList from '../CommentList';
 import NetworkUser from '../NetworkUser';
 
-const useStyles = makeStyles({
+const styles = {
   root: {
-    padding: theme.spacing(1),
+    py: 2,
   },
+  body: {},
   content: {
-    padding: theme.spacing(1, 2),
-    margin: theme.spacing(2, 0),
-    borderRadius: theme.spacing(3),
+    pb: 1,
   },
-});
+  link: {
+    mr: 3,
+  },
+  comments: {
+    pl: 3,
+  },
+};
 
 export type CommentProps = CommentType;
 
-const Comment: FC<CommentProps> = ({
-  _id,
-  author,
-  content,
-  createdAt,
-  parent,
-  replies,
-  updatedAt,
-}) => {
-  const classes = useStyles();
+const Comment: FC<CommentProps> = ({ author, content, comments }) => {
   const [showReplies, setShowReplies] = useState(false);
+  const fullName = [author.firstName, author.lastName].join(' ');
 
-  const handleReplies = () => setShowReplies((prev) => !prev);
+  const handleReply = () => {
+    setShowReplies(true);
+  };
 
   return (
-    <Grid className={classes.root} container>
-      <Grid container direction='column'>
+    <Grid sx={styles.root} container>
+      <Grid container direction='row'>
         <Grid item>
-          <NetworkUser {...author} showName />
+          <NetworkUser {...author} />
         </Grid>
-        <Paper component={Grid} elevation={4} className={classes.content} item>
-          {content}
-        </Paper>
+        <Grid sx={styles.body} item xs>
+          <Typography variant='subtitle2'>{fullName}</Typography>
+          <Grid sx={styles.content} container>
+            {content}
+          </Grid>
+          <Grid container>
+            <Link sx={styles.link} component='button' underline='hover'>
+              Like
+            </Link>
+            <Link onClick={handleReply} component='button' underline='hover'>
+              Reply
+            </Link>
+          </Grid>
+          <Grid container>
+            {comments?.length > 0 && !showReplies && (
+              <Button onClick={handleReply} variant='text'>
+                <Typography color='white'>{comments.length} replies</Typography>
+              </Button>
+            )}
+          </Grid>
+          {showReplies && (
+            <Grid sx={styles.comments} container direction='column'>
+              {comments?.length > 0 && <CommentList comments={comments} />}
+              <CommentForm
+                onSubmit={console.log}
+                styles={{ root: { py: 2 } }}
+              />
+            </Grid>
+          )}
+        </Grid>
       </Grid>
-      <Grid container>
-        {replies?.length > 0 && !showReplies && (
-          <Button onClick={handleReplies} variant='text'>
-            <Typography color='white'>{replies.length} replies</Typography>
-          </Button>
-        )}
-      </Grid>
-      {showReplies && <CommentList commentId={_id} />}
     </Grid>
   );
 };

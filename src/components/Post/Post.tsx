@@ -1,31 +1,30 @@
 import { Grid, Paper } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import { PostType } from 'api/post';
-import { FC, Suspense } from 'react';
+import { FC } from 'react';
 import { useRecoilValue } from 'recoil';
-import { showCommentState } from 'recoil/atoms/post';
-import theme from 'theme';
-import CommentList from '../CommentList';
+import { showCommentState } from 'src/recoil/comment';
+import { postState } from 'src/recoil/post';
+import PostComments from './components/PostComments';
 import PostDetails from './components/PostDetails';
 import PostLikePanel from './components/PostLikePanel';
 
-const useStyles = makeStyles({
+const styles = {
   root: {
-    margin: theme.spacing(2.5, 0),
+    marginTop: 2.5,
+    marginBottom: 2.5,
     overflow: 'hidden',
   },
-});
-
-export type PostProps = {
-  post: PostType;
 };
 
-const Post: FC<PostProps> = ({ post }) => {
-  const classes = useStyles();
-  const showComment = useRecoilValue(showCommentState(post.id));
+export type PostProps = {
+  postId: string;
+};
+
+const Post: FC<PostProps> = ({ postId }) => {
+  const post = useRecoilValue(postState(postId));
+  const showComment = useRecoilValue(showCommentState(postId));
 
   return (
-    <Paper className={classes.root}>
+    <Paper sx={styles.root}>
       <Grid container direction='row' wrap='nowrap'>
         <PostLikePanel
           postId={post.id}
@@ -37,13 +36,10 @@ const Post: FC<PostProps> = ({ post }) => {
           author={post.author}
           description={post.description}
           images={post.images}
+          comments={post.comments}
         />
       </Grid>
-      {showComment && (
-        <Suspense fallback={<div>Loading ...</div>}>
-          <CommentList commentId={post.rootComment._id} />
-        </Suspense>
-      )}
+      {showComment && <PostComments postId={postId} />}
     </Paper>
   );
 };

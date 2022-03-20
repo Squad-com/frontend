@@ -1,4 +1,4 @@
-import axiosInstance from '../axiosInstance';
+import axiosInstance from '../axios';
 import { NetworkUserType } from './post';
 
 export type CommentType = {
@@ -7,8 +7,7 @@ export type CommentType = {
   content: string;
   createdAt: Date;
   updatedAt: Date;
-  parent: string;
-  replies: string[];
+  comments: CommentType[];
 };
 
 export const fetchComments = (commentId: string): Promise<CommentType[]> =>

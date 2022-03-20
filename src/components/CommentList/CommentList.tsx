@@ -1,32 +1,34 @@
-import { Grid } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { Divider, Grid } from '@mui/material';
 import { FC } from 'react';
-import { useRecoilValue } from 'recoil';
-import { commentsState } from '../../recoil/selectors/comment';
-import theme from '../../theme';
+import { CommentType } from 'src/api/comment';
+import Comment from '../Comment';
 
-const useStyles = makeStyles({
+const styles = {
   root: {
-    padding: theme.spacing(2),
+    py: 2,
+    position: 'relative',
   },
-});
-
-export type CommentListProps = {
-  commentId: string;
+  divider: {
+    height: '100%',
+    position: 'absolute',
+    left: 20,
+    top: 0,
+  },
 };
 
-const CommentList: FC<CommentListProps> = ({ commentId }) => {
-  const classes = useStyles();
-  const comments = useRecoilValue(commentsState(commentId));
-  console.log(comments);
+export type CommentListProps = {
+  comments: CommentType[];
+};
 
+const CommentList: FC<CommentListProps> = ({ comments }) => {
   return (
-    <Grid className={classes.root} container direction='column'>
-      {/* {comments.map((comment) => (
-        <Grid item>
-          <Comment {...comment} />
+    <Grid sx={styles.root} container direction='column'>
+      <Divider sx={styles.divider} orientation='vertical' />
+      {comments.map((comment) => (
+        <Grid key={`${comment._id}-item`} item>
+          <Comment key={`${comment._id}-comment`} {...comment} />
         </Grid>
-      ))} */}
+      ))}
     </Grid>
   );
 };

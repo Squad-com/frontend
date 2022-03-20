@@ -1,33 +1,26 @@
 import { Avatar, Button, Grid, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import { NetworkUserType } from 'api/post';
 import { FC } from 'react';
+import { NetworkUserType } from 'src/api/post';
 
-const useStyles = makeStyles({
+const styles = {
   root: {},
   fullName: {
-    paddingLeft: 10,
+    paddingLeft: 2.5,
   },
   postedBy: {
-    paddingLeft: 10,
+    paddingLeft: 2.5,
   },
-});
+};
 
 export type PostHeaderProps = { author: NetworkUserType };
 
 const PostHeader: FC<PostHeaderProps> = ({ author }) => {
-  const classes = useStyles();
   const fullName = [author.firstName, author.lastName].join(' ');
 
   return (
-    <Grid
-      className={classes.root}
-      container
-      direction='row'
-      alignItems='center'
-    >
+    <Grid sx={styles.root} container direction='row' alignItems='center'>
       <Avatar src={author.image} alt={fullName} />
-      <Typography className={classes.fullName} variant='subtitle1'>
+      <Typography sx={styles.fullName} variant='subtitle1'>
         {fullName}
       </Typography>
       <Grid item xs container direction='row' justifyContent='flex-end'>

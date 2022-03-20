@@ -21,7 +21,7 @@ const onResponse = (response: AxiosResponse): any => {
 };
 
 const onResponseError = (error: AxiosError): Promise<AxiosError> => {
-  console.error(`[response error] [${error.toJSON()}]`);
+  console.error(`[response error] [${error}]`);
   return Promise.reject(error);
 };
 

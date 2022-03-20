@@ -1,16 +1,14 @@
 import { Avatar, Grid, IconButton, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import { NetworkUserType } from 'api/post';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import theme from 'theme';
+import { NetworkUserType } from 'src/api/post';
 
-const useStyles = makeStyles({
+const styles = {
   iconButton: {
     padding: 0,
-    marginRight: theme.spacing(2),
+    marginRight: 2,
   },
-});
+};
 
 export type NetworkUserProps = {
   showName?: boolean;
@@ -24,7 +22,6 @@ const NetworkUser: FC<NetworkUserProps> = ({
   username,
   showName,
 }) => {
-  const classes = useStyles();
   const fullName = [firstName, lastName].join(' ');
   const navigate = useNavigate();
 
@@ -32,7 +29,7 @@ const NetworkUser: FC<NetworkUserProps> = ({
     <Grid container direction='row' alignItems='center'>
       <Grid item>
         <IconButton
-          className={classes.iconButton}
+          sx={styles.iconButton}
           onClick={() => navigate(`/profile/${username}`)}
         >
           <Avatar src={image} alt={fullName} />

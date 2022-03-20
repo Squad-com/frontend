@@ -1,37 +1,34 @@
 import { Avatar, Grid, Paper, TextField } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import useAuth from 'hooks/useAuth';
 import { useSetRecoilState } from 'recoil';
-import { createPostModalState } from '../../../../recoil/atoms';
-import theme from '../../../../theme';
+import useAuth from 'src/hooks/useAuth';
+import { createPostModalState } from 'src/recoil/post';
 
-const useStyles = makeStyles({
+const styles = {
   root: {
-    padding: theme.spacing(5, 4),
-    margin: theme.spacing(2, 0),
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 4,
+    paddingRight: 4,
+    marginY: 2,
   },
   inputWrapper: {
-    paddingLeft: theme.spacing(4),
+    paddingLeft: 4,
   },
   input: {},
-});
+};
 
 const CreatePostPreview = () => {
-  const classes = useStyles();
   const setCreatePostModal = useSetRecoilState(createPostModalState);
   const { userInfo } = useAuth();
   const fullname = [userInfo?.firstName, userInfo?.lastName].join(' ');
 
   return (
-    <Paper className={classes.root}>
+    <Paper sx={styles.root}>
       <Grid container direction='row' alignItems='center'>
-        <Avatar
-          alt={fullname}
-          src='https://media-exp1.licdn.com/dms/image/C4D03AQGFx1xLk_3SwA/profile-displayphoto-shrink_800_800/0/1612644878181?e=1648080000&v=beta&t=nZWIfXpoNYUT80Si_iuWZHFyC5KFOZDzB1qPgJNEkRI'
-        />
-        <Grid className={classes.inputWrapper} item xs>
+        <Avatar alt={fullname} src={userInfo?.image} />
+        <Grid sx={styles.inputWrapper} item xs>
           <TextField
-            className={classes.input}
+            sx={styles.input}
             placeholder='Create Post'
             onClick={() => setCreatePostModal(true)}
             fullWidth

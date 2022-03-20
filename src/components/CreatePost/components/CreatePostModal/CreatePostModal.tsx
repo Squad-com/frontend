@@ -1,7 +1,7 @@
 import { Avatar, Dialog, Divider, Grid, Typography } from '@mui/material';
-import useAuth from 'hooks/useAuth';
 import { useRecoilState } from 'recoil';
-import { createPostModalState } from '../../../../recoil/atoms';
+import useAuth from 'src/hooks/useAuth';
+import { createPostModalState } from 'src/recoil/post';
 import CreatePostForm from './components/CreatePostForm';
 
 const styles = {

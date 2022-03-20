@@ -1,9 +1,6 @@
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Container from '@mui/material/Container';
-import NotificationsIcon from '@mui/icons-material/NotificationsOutlined';
-import ChatBubbleIcon from '@mui/icons-material/ChatBubbleOutline';
 import AddIcon from '@mui/icons-material/AddOutlined';
+import ChatBubbleIcon from '@mui/icons-material/ChatBubbleOutline';
+import NotificationsIcon from '@mui/icons-material/NotificationsOutlined';
 import {
   Button,
   Divider,
@@ -13,7 +10,10 @@ import {
   Select,
   SxProps,
 } from '@mui/material';
-import AccountSettingsDropdown from 'components/AccountSettingsDropdown';
+import AppBar from '@mui/material/AppBar';
+import Container from '@mui/material/Container';
+import Toolbar from '@mui/material/Toolbar';
+import AccountSettingsDropdown from 'src/components/AccountSettingsDropdown';
 
 const styles = {
   select: {

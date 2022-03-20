@@ -1,12 +1,12 @@
 import { Grid, TextField, Typography } from '@mui/material';
-import { createPost } from 'api/post';
-import LoadingButton from 'components/LoadingButton';
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSetRecoilState } from 'recoil';
-import { createPostModalState } from 'recoil/atoms';
-import getErrorMessage from 'utils/getErrorMessage';
+import { createPost } from 'src/api/post';
+import LoadingButton from 'src/components/LoadingButton';
+import { createPostModalState, networkPostsState } from 'src/recoil/post';
+import getErrorMessage from 'src/utils/getErrorMessage';
 
 const styles = {
   root: {
@@ -39,6 +39,7 @@ const CreatePostForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const setPostModal = useSetRecoilState(createPostModalState);
   const { enqueueSnackbar } = useSnackbar();
+  const setNetworkPosts = useSetRecoilState(networkPostsState);
   const {
     register,
     handleSubmit,
@@ -50,6 +51,7 @@ const CreatePostForm = () => {
     setIsLoading(true);
     createPost({ description: post })
       .then((data) => {
+        setNetworkPosts((posts) => [data, ...posts]);
         setPostModal(false);
         enqueueSnackbar('New post is created!', { variant: 'success' });
       })

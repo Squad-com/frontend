@@ -1,20 +1,21 @@
 import { Grid, MobileStepper, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import theme from 'theme';
+import { Box } from '@mui/system';
 import carouselItems from './assets/carouselItems.json';
 
-const useStyles = makeStyles({
+const styles = {
   root: {},
   imgWrapper: {},
   image: {
     objectFit: 'contain',
     maxWidth: 300,
+    height: 400,
   },
   textWrapper: {
-    margin: theme.spacing(4, 0),
+    marginTop: 4,
+    marginBottom: 4,
   },
   title: {
-    marginBottom: theme.spacing(2),
+    marginBottom: 2,
   },
   stepper: {
     backgroundColor: 'transparent',
@@ -26,35 +27,34 @@ const useStyles = makeStyles({
     width: 6,
     height: 6,
   },
-});
+};
 
 const AuthCarousel = () => {
   const item = carouselItems[0];
-  const classes = useStyles();
 
   return (
-    <Grid className={classes.root} container direction='column' flex={1}>
+    <Grid sx={styles.root} container direction='column' flex={1}>
       <Grid
-        className={classes.imgWrapper}
+        sx={styles.imgWrapper}
         container
         direction='column'
         alignItems='center'
         justifyContent='center'
         flex={1}
       >
-        <img className={classes.image} src={item.image} alt={item.title} />
+        <Box
+          sx={styles.image}
+          component='img'
+          src={item.image}
+          alt={item.title}
+        />
       </Grid>
-      <Grid className={classes.textWrapper} item>
-        <Typography
-          className={classes.title}
-          variant='h1'
-          align='center'
-          color='white'
-        >
+      <Grid sx={styles.textWrapper} item>
+        <Typography sx={styles.title} variant='h1' align='center' color='white'>
           {item.title}
         </Typography>
         <Typography
-          className={classes.title}
+          sx={styles.title}
           variant='body2'
           align='center'
           color='white'
@@ -67,10 +67,10 @@ const AuthCarousel = () => {
         nextButton='next'
         backButton='back'
         position='static'
-        classes={{
-          root: classes.stepper,
-          dot: classes.dot,
-          dotActive: classes.activeStepper,
+        sx={{
+          root: styles.stepper,
+          dot: styles.dot,
+          dotActive: styles.activeStepper,
         }}
       />
     </Grid>

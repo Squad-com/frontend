@@ -1,4 +1,5 @@
-import axiosInstance from '../axiosInstance';
+import axiosInstance from '../axios';
+import { CommentType } from './comment';
 
 export type NetworkUserType = {
   _id: string;
@@ -8,17 +9,17 @@ export type NetworkUserType = {
   lastName: string;
 };
 
-export type RootCommentType = {
-  _id: string;
-  replies: string[];
-};
+export enum VoteEnum {
+  UP = 1,
+  DOWN = -1,
+}
 export type PostType = {
   id: string;
   author: NetworkUserType;
   description: string;
   score: number;
-  rootComment: RootCommentType;
-  voteState?: 'UP' | 'DOWN';
+  comments: any;
+  voteState?: VoteEnum;
   images: string[];
 };
 
@@ -31,8 +32,14 @@ type CreatePostOptions = {
 export const createPost = ({ description }: CreatePostOptions): Promise<any> =>
   axiosInstance.post('/posts', { description });
 
-export const likePost = (postId: string) =>
-  axiosInstance
-    .post(`/posts/${postId}/like`)
-    .then((res) => res.data)
-    .catch(null);
+export const votePost = (postId: string, vote: VoteEnum) =>
+  axiosInstance.post(`/posts/${postId}/vote`, { dir: vote });
+
+export const fetchPostComments = (postId: string): Promise<CommentType[]> =>
+  axiosInstance.get(`/posts/${postId}/comments`);
+
+export const createPostComment = (
+  postId: string,
+  comment: string
+): Promise<CommentType[]> =>
+  axiosInstance.post(`/posts/${postId}/comments`, { comment });

@@ -1,8 +1,8 @@
-import axiosInstance from 'axiosInstance';
 import { useSnackbar } from 'notistack';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { authTokenState } from 'recoil/atoms/auth';
-import { userInfoState } from 'recoil/selectors/user';
+import axiosInstance from 'src/axios';
+import { authTokenState } from 'src/recoil/auth';
+import { userInfoState } from 'src/recoil/user';
 
 const TOKEN_NAME = 'auth-token';
 

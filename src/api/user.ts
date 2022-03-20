@@ -1,4 +1,4 @@
-import axiosInstance from 'axiosInstance';
+import axiosInstance from 'src/axios';
 import { NetworkUserType } from './post';
 
 export type AdminInfoType = { email: string } & NetworkUserType;
